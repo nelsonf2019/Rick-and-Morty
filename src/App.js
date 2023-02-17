@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import { useState } from 'react'
+import Card from './components/Card/Card'
+import Cards from './components/Cards/Cards'
+import SearchBar from './components/Search/SearchBar'
+import Nav from './components/Nav/Nav'
 
-function App() {
+function App () {
+
+  const [characters, setCharacters] = useState([]);
+
+  const onSearch=(dato)=>{
+    fetch(`https://rickandmortyapi.com/api/character/${dato}`)
+    .then((response) => response.json())
+    .then((data) => {
+       if (data.name) {
+          setCharacters((oldChars) => [...oldChars, data]);
+       } else {
+          window.alert('No hay personajes con ese ID');
+       }
+    });
+}
+  function onClose(id){
+    setCharacters(characters.filter(personaje => personaje.id !==id))
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App' style={{ padding: '25px' }}>
+       
+        <Nav onSearch={onSearch} />
+       
+      <hr />
+      <div >
+        <Cards
+          characters={characters} onClose={onClose}
+        />
+      </div>
+      
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

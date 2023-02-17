@@ -1,0 +1,18 @@
+.addButton{
+    background-color: grey;
+    color:white;
+    border-radius: 30%;
+    width: 100px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    gap:10px;
+}
+
+.container{
+   
+    display: flex;
+    justify-content: right;
+}
